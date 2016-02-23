@@ -8,10 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Aedes.Filters;
 using Aedes.Models;
 
 namespace Aedes.Controllers
 {
+    [AuthFilter]
     public class FrequenciesController : ApiController
     {
         private AedesContext db = new AedesContext();
@@ -31,72 +33,6 @@ namespace Aedes.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(frequency);
-        }
-
-        // PUT: api/Frequencies/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutFrequency(int id, Frequency frequency)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != frequency.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(frequency).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FrequencyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Frequencies
-        [ResponseType(typeof(Frequency))]
-        public IHttpActionResult PostFrequency(Frequency frequency)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Frequencies.Add(frequency);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = frequency.Id }, frequency);
-        }
-
-        // DELETE: api/Frequencies/5
-        [ResponseType(typeof(Frequency))]
-        public IHttpActionResult DeleteFrequency(int id)
-        {
-            Frequency frequency = db.Frequencies.Find(id);
-            if (frequency == null)
-            {
-                return NotFound();
-            }
-
-            db.Frequencies.Remove(frequency);
-            db.SaveChanges();
 
             return Ok(frequency);
         }

@@ -12,8 +12,6 @@ namespace Aedes.Models
     {
         [DataMember]
         [Key]
-        public int Id { get; set; }
-        [DataMember]
         public string Username { get; set; }
         [DataMember]
         public string Password { get; set; }
@@ -28,6 +26,6 @@ namespace Aedes.Models
         public DateTime DateRegister { get; set; }
 
         [IgnoreDataMember]
-        public virtual List<Occurrence> Occurrences { get; set; }
+        public virtual List<UserTask> UserTasks { get; set; }
     }
 }

@@ -8,24 +8,33 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Aedes.Filters;
 using Aedes.Models;
 
 namespace Aedes.Controllers
 {
+    [AuthFilter]
     public class UserTasksController : ApiController
     {
         private AedesContext db = new AedesContext();
+        private string key => Request.GetQueryNameValuePairs().First(q => q.Key == "key").Value;
+        private User user => db.Users.FirstOrDefault(u => u.Key == key);
 
         // GET: api/UserTasks
-        public IQueryable<UserTask> GetUserTasks()
-        {
-            return db.UserTasks;
+        public List<UserTask> GetUserTasks()
+        {            
+            return user.UserTasks;
         }
 
         // GET: api/UserTasks/5
         [ResponseType(typeof(UserTask))]
         public IHttpActionResult GetUserTask(int id)
         {
+            if (!UserTaskExists(id))
+            {
+                return BadRequest();
+            }
+
             UserTask userTask = db.UserTasks.Find(id);
             if (userTask == null)
             {
@@ -39,6 +48,11 @@ namespace Aedes.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUserTask(int id, UserTask userTask)
         {
+            if (!UserTaskExists(id))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -79,7 +93,12 @@ namespace Aedes.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.UserTasks.Add(userTask);
+            if (userTask.Username != user.Username)
+            {
+                return BadRequest();
+            }
+
+            user.UserTasks.Add(userTask);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = userTask.Id }, userTask);
@@ -89,6 +108,11 @@ namespace Aedes.Controllers
         [ResponseType(typeof(UserTask))]
         public IHttpActionResult DeleteUserTask(int id)
         {
+            if (!UserTaskExists(id))
+            {
+                return BadRequest();
+            }
+
             UserTask userTask = db.UserTasks.Find(id);
             if (userTask == null)
             {
@@ -112,7 +136,7 @@ namespace Aedes.Controllers
 
         private bool UserTaskExists(int id)
         {
-            return db.UserTasks.Count(e => e.Id == id) > 0;
+            return user.UserTasks.Count(e => e.Id == id) > 0;
         }
     }
 }

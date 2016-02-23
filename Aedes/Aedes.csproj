@@ -101,9 +101,11 @@
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserTasksController.cs" />
+    <Compile Include="Filters\AuthFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HashIt.cs" />
     <Compile Include="Models\AedesContext.cs" />
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Models\Frequency.cs" />

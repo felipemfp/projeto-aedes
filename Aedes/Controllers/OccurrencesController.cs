@@ -8,24 +8,33 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Aedes.Filters;
 using Aedes.Models;
 
 namespace Aedes.Controllers
 {
+    [AuthFilter]
     public class OccurrencesController : ApiController
     {
         private AedesContext db = new AedesContext();
+        private string key => Request.GetQueryNameValuePairs().First(q => q.Key == "key").Value;
+        private User user => db.Users.FirstOrDefault(u => u.Key == key);
 
         // GET: api/Occurrences
         public IQueryable<Occurrence> GetOccurrences()
         {
-            return db.Occurrences;
+            return db.Occurrences.Where(o => o.UserTask.Username == user.Username);
         }
 
         // GET: api/Occurrences/5
         [ResponseType(typeof(Occurrence))]
         public IHttpActionResult GetOccurrence(int id)
         {
+            if (!OccurrenceExists(id))
+            {
+                return BadRequest();
+            }
+
             Occurrence occurrence = db.Occurrences.Find(id);
             if (occurrence == null)
             {
@@ -39,6 +48,11 @@ namespace Aedes.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutOccurrence(int id, Occurrence occurrence)
         {
+            if (!OccurrenceExists(id))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -79,6 +93,11 @@ namespace Aedes.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (db.UserTasks.Find(occurrence.UserTaskId).Username != user.Username)
+            {
+                return BadRequest();
+            }
+
             db.Occurrences.Add(occurrence);
             db.SaveChanges();
 
@@ -89,6 +108,11 @@ namespace Aedes.Controllers
         [ResponseType(typeof(Occurrence))]
         public IHttpActionResult DeleteOccurrence(int id)
         {
+            if (!OccurrenceExists(id))
+            {
+                return BadRequest();
+            }
+
             Occurrence occurrence = db.Occurrences.Find(id);
             if (occurrence == null)
             {
@@ -112,7 +136,7 @@ namespace Aedes.Controllers
 
         private bool OccurrenceExists(int id)
         {
-            return db.Occurrences.Count(e => e.Id == id) > 0;
+            return db.Occurrences.Where(o=>o.UserTask.Username == user.Username).Count(e => e.Id == id) > 0;
         }
     }
 }

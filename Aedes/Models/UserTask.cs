@@ -22,7 +22,7 @@ namespace Aedes.Models
         public TimeSpan TimeOfReminder { get; set; }
 
         [DataMember]
-        public int UserId { get; set; }
+        public string Username { get; set; }
         [DataMember]
         public virtual User User { get; set; }
 

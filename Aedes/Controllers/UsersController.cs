@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Aedes.Filters;
 using Aedes.Models;
 
 namespace Aedes.Controllers
@@ -15,19 +16,15 @@ namespace Aedes.Controllers
     public class UsersController : ApiController
     {
         private AedesContext db = new AedesContext();
+        private string key => Request.GetQueryNameValuePairs().First(q => q.Key == "key").Value;
+        private User user => db.Users.FirstOrDefault(u => u.Key == key);
 
         // GET: api/Users
-        public IQueryable<User> GetUsers()
-        {
-            return db.Users;
-        }
-
-        // GET: api/Users/5
+        [AuthFilter]
         [ResponseType(typeof(User))]
-        public IHttpActionResult GetUser(int id)
+        public IHttpActionResult GetUser()
         {
-            User user = db.Users.Find(id);
-            if (user == null)
+            if (this.user == null)
             {
                 return NotFound();
             }
@@ -36,18 +33,27 @@ namespace Aedes.Controllers
         }
 
         // PUT: api/Users/5
+        [AuthFilter]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user)
+        public IHttpActionResult PutUser(string id, User user)
         {
+            if (!UserExists(id))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.Id)
+            if (this.user.Username != user.Username)
             {
                 return BadRequest();
             }
+
+            user.Password = Helpers.HashIt.SHA256($"salt{user.Username}{user.Password}salt");
+            user.Key = db.Users.Find(id).Key;
 
             db.Entry(user).State = EntityState.Modified;
 
@@ -79,16 +85,40 @@ namespace Aedes.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Users.Add(user);
-            db.SaveChanges();
+            user.DateRegister = DateTime.Now;
+            user.Password = Helpers.HashIt.SHA256($"salt{user.Username}{user.Password}salt");
+            user.Key = Helpers.HashIt.SHA256($"salt{user.Username}{user.DateRegister.ToString("yyyy-MM-dd HH:mm:ss")}salt");
 
-            return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
+            db.Users.Add(user);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (UserExists(user.Username))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = user.Username }, user);
         }
 
         // DELETE: api/Users/5
+        [AuthFilter]
         [ResponseType(typeof(User))]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser(string id)
         {
+            if (!UserExists(id))
+            {
+                return BadRequest();
+            }
             User user = db.Users.Find(id);
             if (user == null)
             {
@@ -110,9 +140,9 @@ namespace Aedes.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
-            return db.Users.Count(e => e.Id == id) > 0;
+            return this.user.Username == id;
         }
     }
 }
