@@ -23,6 +23,7 @@ namespace Aedes.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Frequency> Frequencies { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<UserTask> UserTasks { get; set; }
         public virtual DbSet<Occurrence> Occurrences { get; set; }
     }
 }

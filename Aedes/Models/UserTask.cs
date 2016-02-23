@@ -8,24 +8,28 @@ using System.Web;
 namespace Aedes.Models
 {
     [DataContract]
-    public class User
+    public class UserTask
     {
         [DataMember]
         [Key]
         public int Id { get; set; }
+
         [DataMember]
-        public string Username { get; set; }
+        public bool IsEnabled { get; set; }
         [DataMember]
-        public string Password { get; set; }
+        public bool IsReminder { get; set; }
         [DataMember]
-        public string Key { get; set; }
+        public TimeSpan TimeOfReminder { get; set; }
+
         [DataMember]
-        public string Name { get; set; }
+        public int UserId { get; set; }
         [DataMember]
-        [EmailAddress]
-        public string Email { get; set; }
+        public virtual User User { get; set; }
+
         [DataMember]
-        public DateTime DateRegister { get; set; }
+        public int TaskId { get; set; }
+        [DataMember]
+        public virtual Task Task { get; set; }
 
         [IgnoreDataMember]
         public virtual List<Occurrence> Occurrences { get; set; }
