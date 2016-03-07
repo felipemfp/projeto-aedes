@@ -10,15 +10,11 @@ using Microsoft.Phone.Shell;
 
 namespace Aedes.Aplicativo
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class LoginPage : PhoneApplicationPage
     {
-        public MainPage()
+        public LoginPage()
         {
             InitializeComponent();
-            if (Helpers.Preferences.CurrentUser == null)
-            {
-                NavigationService.Navigate(new Uri("~/RegisterPage", UriKind.Relative));
-            }
         }
     }
 }
