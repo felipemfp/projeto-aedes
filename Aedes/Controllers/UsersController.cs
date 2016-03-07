@@ -32,6 +32,24 @@ namespace Aedes.Controllers
             return Ok(user);
         }
 
+        // GET: api/Users/5
+        [AuthFilter]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetUser(string id)
+        {
+            if (this.user == null)
+            {
+                return NotFound();
+            }
+
+            if (this.user.Username != id)
+            {
+                return BadRequest();
+            }
+                
+            return Ok(user);
+        }
+
         // PUT: api/Users/5
         [AuthFilter]
         [ResponseType(typeof(void))]
