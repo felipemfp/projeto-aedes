@@ -113,6 +113,21 @@ namespace Aedes.Controllers
             try
             {
                 db.SaveChanges();
+
+                user.UserTasks = new List<UserTask>();
+
+                foreach (Task task in db.Tasks)
+                {
+                    user.UserTasks.Add(new UserTask()
+                    {
+                        Task = task,
+                        IsEnabled = true,
+                        IsReminder = false,
+                        TimeOfReminder = new TimeSpan(9, 30, 0)
+                    });
+                }
+
+                db.SaveChanges();
             }
             catch (DbUpdateException)
             {

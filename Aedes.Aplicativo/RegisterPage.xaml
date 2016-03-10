@@ -54,9 +54,9 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Text="name" Grid.Row="0"></TextBlock>
+            <TextBlock Text="nome" Grid.Row="0"></TextBlock>
             <TextBlock Text="email" Grid.Row="1"></TextBlock>
-            <TextBlock Text="password" Grid.Row="2"></TextBlock>
+            <TextBlock Text="senha" Grid.Row="2"></TextBlock>
             <TextBox Name="txtName" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="0" />
             <TextBox Name="txtEmail" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1"/>
             <PasswordBox Name="txtPassword" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="2"/>

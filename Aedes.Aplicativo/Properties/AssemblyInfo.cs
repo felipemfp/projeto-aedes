@@ -6,12 +6,12 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Aedes.Aplicativo")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Combate ao Aedes")]
+[assembly: AssemblyDescription("Aplicativo para lembrar de realizar tarefas de prevenção ao mosquito Aedes aegypti.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Aedes.Aplicativo")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © Felipe Pontes 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

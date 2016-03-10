@@ -13,18 +13,43 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
 
-    <!--LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot">
-        <phone:Panorama Title="aedes aplicativo">
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="taskTemplate">
+            <StackPanel Margin="0, 10, 0, 0">
+                <TextBlock TextWrapping="Wrap" Text="{Binding Task.Description}" FontSize="28" Foreground="#ffffff"></TextBlock>
+                <StackPanel Background="#d32f2f" HorizontalAlignment="Left">
+                    <TextBlock Margin="10, 5" Text="{Binding Task.Frequency.Description}" Foreground="#e0e0e0"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
-            <!--Panorama item one-->
-            <phone:PanoramaItem Header="item1">
-                <Grid/>
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#f44336">
+        <phone:Panorama Title="combate ao aedes">
+
+            <phone:PanoramaItem Header="hoje">
+                <Grid>
+                    <ListBox Name="lbxToday" ItemTemplate="{StaticResource taskTemplate}" DoubleTap="lbx_DoubleTap" Hold="lbx_Hold"></ListBox>
+                </Grid>
             </phone:PanoramaItem>
 
-            <!--Panorama item two-->
-            <phone:PanoramaItem Header="item2">
-                <Grid/>
+            <phone:PanoramaItem Header="amanhã">
+                <Grid>
+                    <ListBox Name="lbxTomorrow" ItemTemplate="{StaticResource taskTemplate}" DoubleTap="lbx_DoubleTap" Hold="lbx_Hold"></ListBox>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem Header="em breve">
+                <Grid>
+                    <ListBox Name="lbxSoon" ItemTemplate="{StaticResource taskTemplate}" DoubleTap="lbx_DoubleTap" Hold="lbx_Hold"></ListBox>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem Header="já fiz">
+                <Grid>
+                    <ListBox Name="lbxAlreadyDone" ItemTemplate="{StaticResource taskTemplate}" DoubleTap="lbx_DoubleTap" Hold="lbx_Hold"></ListBox>
+                </Grid>
             </phone:PanoramaItem>
         </phone:Panorama>
     </Grid>
