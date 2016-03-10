@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Helpers\AedesClient.cs" />
     <Compile Include="Helpers\Preferences.cs" />
+    <Compile Include="Helpers\StringExt.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

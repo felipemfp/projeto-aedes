@@ -15,10 +15,15 @@ namespace Aedes.Aplicativo
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             if (Helpers.Preferences.CurrentUser == null)
             {
-                NavigationService.Navigate(new Uri("~/RegisterPage", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/RegisterPage.xaml", UriKind.Relative));
             }
+            base.OnNavigatedTo(e);
         }
     }
 }

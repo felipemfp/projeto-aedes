@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FF2980B9">
+    <Grid x:Name="LayoutRoot" Background="#039be5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -41,18 +41,29 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="AEDES APLICATIVO" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+            <TextBlock Text="COMBATE AO AEDES" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
             <TextBlock Text="cadastro" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <Rectangle Fill="#29b6f6" Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Rectangle Fill="#FF2A79AE" Margin="12,-17,10,602"/>
-            <TextBox Text="nome" HorizontalAlignment="Left" Height="72" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456"/>
-            <TextBox Text="telefone" HorizontalAlignment="Left" Height="72" Margin="0,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456"/>
-            <TextBox Text="email" HorizontalAlignment="Left" Height="72" Margin="0,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456"/>
-            <TextBox Text="senha" HorizontalAlignment="Left" Height="72" Margin="0,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456"/>
-            <Button x:Name="btnCadastrar" Content="cadastrar" HorizontalAlignment="Left" Margin="0,292,-2,0" VerticalAlignment="Top" Width="458" Background="#FF2ECC71"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="name" Grid.Row="0"></TextBlock>
+            <TextBlock Text="email" Grid.Row="1"></TextBlock>
+            <TextBlock Text="password" Grid.Row="2"></TextBlock>
+            <TextBox Name="txtName" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="0" />
+            <TextBox Name="txtEmail" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1"/>
+            <PasswordBox Name="txtPassword" Margin="0, 30, 0, 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="2"/>
+            <StackPanel Grid.Row="3">
+                <Button Name="btnRegister" Click="btnRegister_Click" Content="cadastrar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="4" />
+                <HyperlinkButton NavigateUri="/LoginPage.xaml" Content="já tenho conta"></HyperlinkButton>
+            </StackPanel>
         </Grid>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

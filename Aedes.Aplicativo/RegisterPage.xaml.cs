@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Aedes.Aplicativo.Resources;
+using Aedes.Aplicativo.Models;
 
 namespace Aedes.Aplicativo
 {
@@ -17,25 +18,47 @@ namespace Aedes.Aplicativo
         public RegisterPage()
         {
             InitializeComponent();
-
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
         }
 
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (Helpers.Preferences.CurrentUser != null)
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            }
+            base.OnNavigatedTo(e);
+        }
 
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
+        private async void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            string name = txtName.Text;
+            string password = txtPassword.Password;
+            string email = txtEmail.Text;
 
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+            if (!Helpers.StringExt.IsNullOrWhiteSpace(name, password, email))
+            {
+                User user = new User();
+                user.Username = email;
+                user.Name = name;
+                user.Password = password;
+                user.Email = email;
+                user.DateRegister = DateTime.Now;
+
+                User registeredUser = await User.Register(user);
+                if (registeredUser != null)
+                {
+                    Helpers.Preferences.SetCurrentUser(registeredUser);
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    MessageBox.Show("Algo deu errado! Tente novamente mais tarde.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Preencha todos os campos antes de continuar!");
+            }
+        }
     }
 }

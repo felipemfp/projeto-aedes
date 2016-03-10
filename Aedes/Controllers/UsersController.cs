@@ -33,21 +33,22 @@ namespace Aedes.Controllers
         }
 
         // GET: api/Users/5
-        [AuthFilter]
         [ResponseType(typeof(User))]
-        public IHttpActionResult GetUser(string id)
+        public IHttpActionResult GetUser(string username, string password)
         {
-            if (this.user == null)
+            User user = db.Users.Find(username);
+
+            if (user == null)
             {
                 return NotFound();
             }
 
-            if (this.user.Username != id)
+            if (user.Password == Helpers.HashIt.SHA256($"salt{username}{password}salt"))
             {
-                return BadRequest();
+                return Ok(user);
             }
-                
-            return Ok(user);
+
+            return BadRequest();
         }
 
         // PUT: api/Users/5

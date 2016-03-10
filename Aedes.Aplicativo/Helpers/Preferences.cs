@@ -10,16 +10,24 @@ namespace Aedes.Aplicativo.Helpers
 {
     public class Preferences
     {
+        private const string currentUserKey = "currentUser";
+
         private static ApplicationDataContainer localSettings => ApplicationData.Current.LocalSettings;
 
         public static Models.User CurrentUser
         {
             get
             {
-                string json = Preferences.Get("currentUser") as string;
+                string json = Preferences.Get(currentUserKey) as string;
                 if (String.IsNullOrEmpty(json)) return null;
                 return JsonConvert.DeserializeObject<Models.User>(json);
             }
+        }
+
+        public static void SetCurrentUser(Models.User user)
+        {
+            string json = JsonConvert.SerializeObject(user);
+            Add(currentUserKey, json);
         }
 
         public static void Add(string key, string value)
