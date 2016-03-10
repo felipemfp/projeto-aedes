@@ -131,7 +131,7 @@ namespace Aedes.Aplicativo
             {
                 if (MessageBox.Show($"Deseja ser lembrado de realizar \"{userTask.Task.Description}\"?", "Adicionar lembrete", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    Preferences.SetReminder(userTask, occurrences.Last(o => o.UserTaskId == userTask.Id));
+                    Preferences.SetReminder(userTask, occurrences.LastOrDefault(o => o.UserTaskId == userTask.Id));
                 }
             }
         }

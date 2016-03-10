@@ -54,7 +54,7 @@ namespace Aedes.Aplicativo.Helpers
             Reminder reminder = new Reminder(Guid.NewGuid().ToString());
             reminder.Title = "Lembrete";
             reminder.Content = userTask.Task.Description;
-            reminder.BeginTime = lastOccurrence.DateOccurrence.AddDays(userTask.Task.Frequency.Days);
+            reminder.BeginTime = lastOccurrence?.DateOccurrence.AddDays(userTask.Task.Frequency.Days) ?? DateTime.Now.AddDays(userTask.Task.Frequency.Days);
             reminder.ExpirationTime = reminder.BeginTime.AddDays(userTask.Task.Frequency.Days);
             reminder.RecurrenceType = RecurrenceInterval.Daily;
             reminder.NavigationUri = new Uri($"/MainPage.xaml?reminder={userTask.Id}", UriKind.Relative);
