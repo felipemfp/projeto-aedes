@@ -104,7 +104,10 @@ namespace Aedes.Controllers
                 return BadRequest(ModelState);
             }
 
-            user.DateRegister = DateTime.Now;
+            if (user.DateRegister == null)
+            {
+                user.DateRegister = DateTime.Now;
+            }
             user.Password = Helpers.HashIt.SHA256($"salt{user.Username}{user.Password}salt");
             user.Key = Helpers.HashIt.SHA256($"salt{user.Username}{user.DateRegister.ToString("yyyy-MM-dd HH:mm:ss")}salt");
 

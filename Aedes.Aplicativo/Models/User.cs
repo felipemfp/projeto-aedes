@@ -17,6 +17,7 @@ namespace Aedes.Aplicativo.Models
 
         public static async Task<User> Register(User user)
         {
+            user.Key = "";
             using (var client = AedesClient.GetClient())
             {
                 HttpResponseMessage response = await client.PostAsync("users", AedesClient.JsonContent(user));
