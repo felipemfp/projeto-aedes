@@ -1,4 +1,4 @@
-# Projeto Aedes
+# Projeto Combate ao Aedes
 
 **Instituição**: Instituto Federal do Rio Grande do Norte
 
