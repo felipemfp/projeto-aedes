@@ -16,7 +16,7 @@ namespace Aedes.Controllers
     [AuthFilter]
     public class FrequenciesController : ApiController
     {
-        private AedesContext db = new AedesContext();
+        private AedesDBContext db = new AedesDBContext();
 
         // GET: api/Frequencies
         public IQueryable<Frequency> GetFrequencies()

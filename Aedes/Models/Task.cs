@@ -14,11 +14,20 @@ namespace Aedes.Models
         [Key]
         public int Id { get; set; }
         [DataMember]
+        [Required]
+        [MaxLength(255)]
         public string Description { get; set; }
 
         [DataMember]
+        [Required]
         public int FrequencyId { get; set; }
         [DataMember]
         public virtual Frequency Frequency { get; set; }
+
+        public Task(string description, int frequencyId)
+        {
+            this.Description = description;
+            this.FrequencyId = frequencyId;
+        }
     }
 }

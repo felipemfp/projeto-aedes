@@ -15,7 +15,7 @@ namespace Aedes.Controllers
 {
     public class UsersController : ApiController
     {
-        private AedesContext db = new AedesContext();
+        private AedesDBContext db = new AedesDBContext();
         private string key => Request.GetQueryNameValuePairs().First(q => q.Key == "key").Value;
         private User user => db.Users.FirstOrDefault(u => u.Key == key);
 

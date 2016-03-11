@@ -106,7 +106,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HashIt.cs" />
-    <Compile Include="Models\AedesContext.cs" />
+    <Compile Include="Models\AedesDBContext.cs" />
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\Occurrence.cs" />

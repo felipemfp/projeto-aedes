@@ -16,7 +16,7 @@ namespace Aedes.Controllers
     [AuthFilter]
     public class TasksController : ApiController
     {
-        private AedesContext db = new AedesContext();
+        private AedesDBContext db = new AedesDBContext();
 
         // GET: api/Tasks
         public IQueryable<Task> GetTasks()

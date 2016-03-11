@@ -18,7 +18,7 @@ namespace Aedes.Filters
             if (query.ContainsKey("key"))
             {
                 string key = query["key"];
-                using (var db = new AedesContext())
+                using (var db = new AedesDBContext())
                 {
                     if (db.Users.FirstOrDefault(u=> u.Key == key) != null)
                     {

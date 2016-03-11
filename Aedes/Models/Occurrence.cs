@@ -14,9 +14,11 @@ namespace Aedes.Models
         [Key]
         public int Id { get; set; }
         [DataMember]
+        [Required]
         public DateTime DateOccurrence { get; set; }
 
         [DataMember]
+        [Required]
         public int UserTaskId { get; set; }
         [DataMember]
         public virtual UserTask UserTask { get; set; }
